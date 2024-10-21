@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/kase.css') }}">
+    <title>Käse-Mischung Berechnung</title>
+    <script>
+        var x = 0;
+        // JavaScript-Funktion zur dynamischen Erstellung von Eingabefeldern für Käsesorten
+        function createInputFields() {
+            const numSorten = document.getElementById("num_sorten").value;
+            const container = document.getElementById("kaese_inputs");
+            container.innerHTML = "";  // Reset the container
+            
+            for (let i = 1; i <= numSorten; i++) {
+                const naming = `<h3>Sorte ${i}</h3>`
+                const blockNameInput =`<div  >
+                    <select class="box" id="name" name="name_${i}">
+                    <option value="Käse Sorte">Käse Sorte</option>
+                    <option value="Edamer">Edamer</option>
+                    <option value="Mozzarella">Mozzarella</option>
+                    <option value="Roter Cheddar">Roter Cheddar</option>
+                    <option value="Emmentaler">Emmentaler</option>
+                </select></div>`
+                const blockWeightInput = `<div><label class="custom-field">
+                    <input type="text" name="block_weight_${i}" required/>
+                    <span class="placeholder" for="block_weight_${i}">Blockgewicht Käsesorte ${i} (kg):</span>
+                </label></div>`;
+                const pizzaWeightInput = `<div><label class="custom-field">
+                    <input type="text" name="pizza_weight_${i}" required/>
+                    <span class="placeholder" for="pizza_weight_${i}">Käse pro Pizza Käsesorte ${i} (g):</span>
+                </label></div>`;
+                
+                container.innerHTML += naming + blockNameInput + blockWeightInput + pizzaWeightInput;
+            }
+            if(x==0){
+                document.getElementById('amount').style='display:none;';
+                document.getElementById('calc').style='display:block;';
+                x=1;    
+                }
+                else{
+                document.getElementById('amount').style='display:block;';
+                x=0;    
+                }
+        }
+    </script>
+</head>
+<body>
+    <h1>Käse-Mischung Berechnung</h1>
+    <form action="/calculate" method="post">
+        <div id="amount">
+        <h2>Wie viele Käsesorten?</h2>
+        <label class="custom-field">
+        <input type="number" id="num_sorten" name="num_sorten" min="2" value="2" required>
+        <h2>Maximale Blöcke pro sorte?</h2>
+        <input type="number" id="max" name="max" min="2" value="15" required>
+        <div><button class="btn cta" type="button" onclick="createInputFields()">Eingabefelder erstellen</button></div>
+        </label></div>
+
+        <div class="ext-box" id="kaese_inputs">
+            <!-- Die dynamisch erstellten Eingabefelder werden hier erscheinen -->
+        </div>
+
+        <button id="calc" class="btn cta2" type="submit">Berechnen</button>
+    </form>
+</body>
+</html>
