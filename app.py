@@ -67,15 +67,16 @@ def calculate():
     block_weights = []
     pizza_weights = []
     for i in range(num_sorten):
-        pizza_name.append(request.form.get(f'name_{i+1}'))
         block_weights.append(float(request.form[f'block_weight_{i+1}'].replace(",", ".")))
         pizza_weights.append(float(request.form[f'pizza_weight_{i+1}'].replace(",", ".")))
+        pizza_name.append(request.form.get(f'name_{i+1}'))
+        pizza_name[i] = pizza_name[i] + "(" + str(block_weights[i]) + "kg)"
+        print(pizza_name[i])
     # Optimierung der Blöcke durchführen
     optimal_counts = berechne_optimal_bloecke(block_weights, pizza_weights, max)
     
     # Berechnung der Pizzen
     pizzen_pro_sorte = berechne_pizzen(optimal_counts, block_weights, pizza_weights)
-
     # Bereitstellung der Ergebnisse an die Webseite
     return render_template('result.html', optimal_counts=optimal_counts, pizzen_pro_sorte=pizzen_pro_sorte, num_sorten=num_sorten, name= pizza_name)
 
