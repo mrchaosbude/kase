@@ -61,7 +61,7 @@ def index():
 def calculate():
     # Anzahl der Käsesorten ermitteln
     num_sorten = int(request.form['num_sorten'])
-    max = int(request.form['max'])
+    max_blocks = int(request.form['max'])
     # Lese die Eingabedaten für alle Käsesorten
     pizza_name = []
     block_weights = []
@@ -73,7 +73,7 @@ def calculate():
         pizza_name[i] = pizza_name[i] + "(" + str(block_weights[i]) + "kg)"
         print(pizza_name[i])
     # Optimierung der Blöcke durchführen
-    optimal_counts = berechne_optimal_bloecke(block_weights, pizza_weights, max)
+    optimal_counts = berechne_optimal_bloecke(block_weights, pizza_weights, max_blocks)
     
     # Berechnung der Pizzen
     pizzen_pro_sorte = berechne_pizzen(optimal_counts, block_weights, pizza_weights)
