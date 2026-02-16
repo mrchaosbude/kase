@@ -7,12 +7,33 @@
     <title>Ergebnisse der Berechnung</title>
 </head>
 <body>
-    <h1>Ergebnisse der Berechnung</h1>
-    <ul class="custom-list">
-        {% for i in range(num_sorten) %}
-        <li>{{ name[i] }}: {{ optimal_counts[i] }} Blöcke, {{ pizzen_pro_sorte[i] }} Pizzen</li>
+    <div class="zusammenfassung">
+        <h1>Ergebnisse der Berechnung</h1>
+
+        <h2>Gesamt (Optimale Blöcke)</h2>
+        <ul class="custom-list">
+            {% for i in range(num_sorten) %}
+            <li>{{ name[i] }}: {{ optimal_counts[i] }} Blöcke, {{ pizzen_pro_sorte[i] }} Pizzen</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    {% if gruppen %}
+    <h2>Aufteilung in {{ num_gruppen }} Gruppen</h2>
+    <div class="gruppen-scroll">
+        {% for g in range(num_gruppen) %}
+        <div class="gruppe-box">
+            <h3>Gruppe {{ g + 1 }}</h3>
+            <ul class="custom-list">
+                {% for i in range(num_sorten) %}
+                <li>{{ name[i].split('(')[0] }}: {{ gruppen[g][i] }} Blöcke</li>
+                {% endfor %}
+            </ul>
+        </div>
         {% endfor %}
-    </ul>
+    </div>
+    {% endif %}
+
     <button class="btn cta" onclick="window.location.href='/käse'">Neue Berechnung durchführen</button>
 </body>
 </html>
